@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="test_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SLx-CS-FUY"/>
+                        <viewControllerLayoutGuide type="bottom" id="dbL-Nn-BGc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8V-ey-jiY" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="163" y="269" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.95621905250000006" green="0.96671049200000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                            </view>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W9G-LW-Yqu" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="173" y="279" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.95621905250000006" green="0.96671049200000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZUT-Vg-wkZ">
+                                <rect key="frame" x="234" y="449" width="58" height="30"/>
+                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="START"/>
+                                <connections>
+                                    <action selector="Start:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LAK-Cb-Rg2"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Puls" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2I-h0-2cF">
+                                <rect key="frame" x="300" y="453" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.9562190525127271" green="0.96671049200789183" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="f8V-ey-jiY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-15" id="2YA-bp-PhL"/>
+                            <constraint firstItem="ZUT-Vg-wkZ" firstAttribute="top" secondItem="W9G-LW-Yqu" secondAttribute="bottom" id="5Ih-am-0ga"/>
+                            <constraint firstItem="W9G-LW-Yqu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="GKs-Ov-CCb"/>
+                            <constraint firstItem="dbL-Nn-BGc" firstAttribute="top" secondItem="R2I-h0-2cF" secondAttribute="bottom" constant="5" id="JmR-fF-Smd"/>
+                            <constraint firstItem="W9G-LW-Yqu" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-15" id="RYj-zQ-ajy"/>
+                            <constraint firstItem="R2I-h0-2cF" firstAttribute="top" secondItem="f8V-ey-jiY" secondAttribute="bottom" id="Syl-fe-xQ5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="W9G-LW-Yqu" secondAttribute="trailing" id="TU5-g7-jqe"/>
+                            <constraint firstItem="R2I-h0-2cF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="100" id="UEK-qR-hRe"/>
+                            <constraint firstItem="W9G-LW-Yqu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="X2t-tN-dJ1"/>
+                            <constraint firstItem="ZUT-Vg-wkZ" firstAttribute="top" secondItem="f8V-ey-jiY" secondAttribute="bottom" id="Xez-nN-v6J"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="f8V-ey-jiY" secondAttribute="trailing" id="cDK-BJ-AOo"/>
+                            <constraint firstItem="ZUT-Vg-wkZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eZ8-et-VLV"/>
+                            <constraint firstItem="W9G-LW-Yqu" firstAttribute="top" secondItem="SLx-CS-FUY" secondAttribute="bottom" constant="5" id="iYo-sq-ExI"/>
+                            <constraint firstItem="dbL-Nn-BGc" firstAttribute="top" secondItem="ZUT-Vg-wkZ" secondAttribute="bottom" constant="5" id="sLO-Lv-2lh"/>
+                            <constraint firstItem="f8V-ey-jiY" firstAttribute="top" secondItem="SLx-CS-FUY" secondAttribute="bottom" constant="5" id="sNY-gN-f94"/>
+                            <constraint firstItem="f8V-ey-jiY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="uA9-YV-RTh"/>
+                            <constraint firstItem="f8V-ey-jiY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xwr-g1-MiN"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="Puls" destination="R2I-h0-2cF" id="qvm-Qn-3Ku"/>
+                        <outlet property="chart" destination="f8V-ey-jiY" id="q6t-b7-9tP"/>
+                        <outlet property="fourier_chart" destination="W9G-LW-Yqu" id="ySa-nh-S9n"/>
+                        <outlet property="startButton" destination="ZUT-Vg-wkZ" id="75b-fG-PrU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="190" y="389"/>
+        </scene>
+    </scenes>
+</document>
