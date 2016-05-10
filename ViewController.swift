@@ -52,7 +52,7 @@ class ViewController: UIViewController,ChartViewDelegate {
         
         self.fourier_chart.gridBackgroundColor = UIColor.darkGrayColor()
         
-        self.fourier_chart.noDataText = "Hallo Felix"
+        self.fourier_chart.noDataText = "Hallo Felix_2"
         
         self.chart.gridBackgroundColor = UIColor.darkGrayColor()
     
