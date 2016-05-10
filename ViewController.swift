@@ -333,6 +333,7 @@ class ViewController: UIViewController,ChartViewDelegate {
            
             
             let size = 1024
+            let sizeHalf = 1024/2
             let log2n:UInt = 10
             
             //FFT-SETUP
@@ -340,8 +341,11 @@ class ViewController: UIViewController,ChartViewDelegate {
             
             var originalReal = [Float]() //1. Speicherort unserer Messwerte
             
-            var real = floats((size/2) * sizeof(Float)) //2 Float Arrays zum Speichern von Real und Imag
-            var imaginary = floats((size/2) * sizeof(Float))
+            var real = floats(sizeHalf ) //2 Float Arrays zum Speichern von Real und Imag
+            var imaginary = floats(sizeHalf)
+            
+            var magnitude = floats(sizeHalf)
+            
             var splitComplex = DSPSplitComplex(realp: &real, imagp: &imaginary) // DSP-Typ zum Speichern von komplexen Zahlen
             
            
@@ -363,37 +367,49 @@ class ViewController: UIViewController,ChartViewDelegate {
             
             
             //Ausgabe der transformierten Werte
-            for i in 0...(size/2-1)
+            for i in 0...(sizeHalf-1)
             {
-                print(String(format: "%.1f + %.1f i",splitComplex.realp.advancedBy(i).memory,(splitComplex.imagp.advancedBy(i).memory)))
+                print(String(format: "%d %.1f + %.1f i",i,splitComplex.realp[i],splitComplex.imagp[i]))
             }
            
             //Gleichanteil = 0
-            splitComplex.realp.advancedBy(0).memory = 0
-            splitComplex.imagp.advancedBy(0).memory = 0
+
             
             
-            for i in 1...510
+            splitComplex.realp[0] = 0
+            splitComplex.imagp[0] = 0
+            
+            
+            
+            
+            for i in 20...511
             {
-                splitComplex.realp.advancedBy(i).memory = 0
-                splitComplex.imagp.advancedBy(i).memory = 0
+                splitComplex.realp[i] = 0
+                splitComplex.imagp[i] = 0
             }
+      
             
             print("-------------------------------------------------")
             
 
             
-            for i in 0...511
+            for i in 0...(sizeHalf-1)
             {
-                  print(String(format: "%d . %.2f + %.1f i",i,splitComplex.realp.advancedBy(i).memory,(splitComplex.imagp.advancedBy(i).memory)))
+                  print(String(format: "%d . %.2f + %.1f i",i,splitComplex.realp[i],(splitComplex.imagp[i])))
             }
-         
+         var scale = Float( 1.0 / (2 * 1024));
+             vDSP_zvmags(&splitComplex, 1, &magnitude, 1, UInt(sizeHalf))
+            
+            vDSP_vsmul(&magnitude, 1, &scale,&magnitude, 1, UInt(size/2));
+
             vDSP_fft_zrip(fft, &splitComplex, 1, log2n, FFTDirection(FFT_INVERSE))
-            var scale = Float( 1.0 / (2 * 1024));
+            
             
             vDSP_vsmul(splitComplex.realp, 1, &scale,splitComplex.realp, 1, UInt(size/2));
             vDSP_vsmul(splitComplex.imagp, 1, &scale, splitComplex.imagp, 1, UInt(size/2));
             
+            
+           
             
             
             
@@ -406,12 +422,12 @@ class ViewController: UIViewController,ChartViewDelegate {
             {
                self.fourierTest.addEntry(ChartDataEntry(value: self.linedata2.getDataSetByIndex(1).entryForIndex(i)!.value,xIndex:i), dataSetIndex: 1)
                 
-                self.fourierTest.addEntry(ChartDataEntry(value: Double(splitComplex.realp.advancedBy(i).memory) ,xIndex: i), dataSetIndex: 0)
+                self.fourierTest.addEntry(ChartDataEntry(value: Double(splitComplex.realp[i]) ,xIndex: i), dataSetIndex: 0)
                 
                 self.fourierTest.addXValue(String(format: "%.1f", Double(self.linedata2.xValCount-511+i)*0.01 ))
                 
-                print(String(format: "%d . %.2f + %.1f i",i,splitComplex.realp.advancedBy(i).memory,(splitComplex.imagp.advancedBy(i).memory)))
-             
+                print(String(format: "%d . %.5f + %.1f i",i,splitComplex.realp[i],(splitComplex.imagp[i])))
+                print(String(format: "%.8f",magnitude[i]))
               
                
             }
