@@ -31,24 +31,30 @@ class ViewController: UIViewController,ChartViewDelegate {
  
     
     let motionmanager = CMMotionManager()
+    
+    
+    
     let linedata2 = LineChartData()
     let linedata = LineChartData()
     let fourierTest = LineChartData()
-    let set1 = LineChartDataSet(yVals: nil, label: "Werte")
-    let set2 = LineChartDataSet(yVals: nil, label: "Moving Average")
-    let set3 = LineChartDataSet(yVals: nil, label: "Abweichung")
-    let set4 = LineChartDataSet(yVals: nil, label: "Puls")
-    let set5 = LineChartDataSet(yVals: nil, label: "Fourier_Vorher")
-    let set6 = LineChartDataSet(yVals: nil, label: "Fourier_Vergleich")
+    
+    
+    let Werte = LineChartDataSet(yVals: nil, label: "Werte")
+    let MovingAverage = LineChartDataSet(yVals: nil, label: "Moving Average")
+    let Abweichung = LineChartDataSet(yVals: nil, label: "Abweichung")
+    let Rechteck = LineChartDataSet(yVals: nil, label: "Puls")
+    let FourierVor = LineChartDataSet(yVals: nil, label: "Fourier_Vorher")
+    let FourierNach = LineChartDataSet(yVals: nil, label: "Fourier_Nach")
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 1
+        
         self.chart.delegate = self
-        // 2
        
-        self.fourier_chart.hidden = true
+        
+        
+        self.fourier_chart.hidden = true       //Zweiter Chart hidden
         
         self.fourier_chart.gridBackgroundColor = UIColor.darkGrayColor()
         
@@ -66,73 +72,76 @@ class ViewController: UIViewController,ChartViewDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    
+    
     @IBAction func Start(sender: UIButton){
         
         
-        set1.axisDependency = .Left // Line will correlate with left axis values
-        set1.setColor(UIColor.blueColor().colorWithAlphaComponent(0.5)) // our line's opacity is 50%
-        set1.setCircleColor(UIColor.blueColor()) // our circle will be dark red
-        set1.lineWidth = 1.0
-        set1.circleRadius = 1.0 // the radius of the node circle
-        set1.fillAlpha = 65 / 255.0
-        set1.fillColor = UIColor.blueColor()
-        set1.highlightColor = UIColor.blueColor()
-        set1.drawValuesEnabled = false
+        Werte.axisDependency = .Left
+        Werte.setColor(UIColor.blueColor().colorWithAlphaComponent(0.5))
+        Werte.setCircleColor(UIColor.blueColor())
+        Werte.lineWidth = 1.0
+        Werte.circleRadius = 1.0
+        Werte.fillAlpha = 65 / 255.0
+        Werte.fillColor = UIColor.blueColor()
+        Werte.highlightColor = UIColor.blueColor()
+        Werte.drawValuesEnabled = false
         
-        set2.axisDependency = .Left // Line will correlate with left axis values
-        set2.setColor(UIColor.redColor().colorWithAlphaComponent(0.5)) // our line's opacity is 50%
-        set2.setCircleColor(UIColor.redColor()) // our circle will be dark red
-        set2.lineWidth = 1.0
-        set2.circleRadius = 1.0 // the radius of the node circle
-        set2.fillAlpha = 65 / 255.0
-        set2.fillColor = UIColor.redColor()
-        set2.highlightColor = UIColor.redColor()
-        set2.drawValuesEnabled = false
+        MovingAverage.axisDependency = .Left
+        MovingAverage.setColor(UIColor.redColor().colorWithAlphaComponent(0.5))
+        MovingAverage.setCircleColor(UIColor.redColor())
+        MovingAverage.lineWidth = 1.0
+        MovingAverage.circleRadius = 1.0
+        MovingAverage.fillAlpha = 65 / 255.0
+        MovingAverage.fillColor = UIColor.redColor()
+        MovingAverage.highlightColor = UIColor.redColor()
+        MovingAverage.drawValuesEnabled = false
         
        
-        set3.axisDependency = .Left // Line will correlate with left axis values
-        set3.setColor(UIColor.blueColor().colorWithAlphaComponent(0.5)) // our line's opacity is 50%
-        set3.setCircleColor(UIColor.blueColor()) // our circle will be dark red
-        set3.lineWidth = 1.0
-        set3.circleRadius = 1.0 // the radius of the node circle
-        set3.fillAlpha = 65 / 255.0
-        set3.fillColor = UIColor.blueColor()
-        set3.highlightColor = UIColor.blueColor()
-        set3.drawValuesEnabled = false
+        Abweichung.axisDependency = .Left
+        Abweichung.setColor(UIColor.blueColor().colorWithAlphaComponent(0.5))
+        Abweichung.setCircleColor(UIColor.blueColor())
+        Abweichung.lineWidth = 1.0
+        Abweichung.circleRadius = 1.0
+        Abweichung.fillAlpha = 65 / 255.0
+        Abweichung.fillColor = UIColor.blueColor()
+        Abweichung.highlightColor = UIColor.blueColor()
+        Abweichung.drawValuesEnabled = false
         
         
-        set4.axisDependency = .Left // Line will correlate with left axis values
-        set4.setColor(UIColor.redColor().colorWithAlphaComponent(0.5)) // our line's opacity is 50%
-        set4.setCircleColor(UIColor.redColor()) // our circle will be dark red
-        set4.lineWidth = 1.0
-        set4.circleRadius = 1.0 // the radius of the node circle
-        set4.fillAlpha = 65 / 255.0
-        set4.fillColor = UIColor.redColor()
-        set4.highlightColor = UIColor.redColor()
-        set4.drawValuesEnabled = false
+        Rechteck.axisDependency = .Left
+        Rechteck.setColor(UIColor.redColor().colorWithAlphaComponent(0.5))
+        Rechteck.setCircleColor(UIColor.redColor())
+        Rechteck.lineWidth = 1.0
+        Rechteck.circleRadius = 1.0
+        Rechteck.fillAlpha = 65 / 255.0
+        Rechteck.fillColor = UIColor.redColor()
+        Rechteck.highlightColor = UIColor.redColor()
+        Rechteck.drawValuesEnabled = false
         
         
     
-        set5.axisDependency = .Left // Line will correlate with left axis values
-        set5.setColor(UIColor.redColor().colorWithAlphaComponent(0.5)) // our line's opacity is 50%
-        set5.setCircleColor(UIColor.redColor()) // our circle will be dark red
-        set5.lineWidth = 1.0
-        set5.circleRadius = 1.0 // the radius of the node circle
-        set5.fillAlpha = 65 / 255.0
-        set5.fillColor = UIColor.redColor()
-        set5.highlightColor = UIColor.redColor()
-        set5.drawValuesEnabled = false
+        FourierVor.axisDependency = .Left
+        FourierVor.setColor(UIColor.redColor().colorWithAlphaComponent(0.5))
+        FourierVor.setCircleColor(UIColor.redColor())
+        FourierVor.lineWidth = 1.0
+        FourierVor.circleRadius = 1.0
+        FourierVor.fillAlpha = 65 / 255.0
+        FourierVor.fillColor = UIColor.redColor()
+        FourierVor.highlightColor = UIColor.redColor()
+        FourierVor.drawValuesEnabled = false
         
         
-        set6.axisDependency = .Left // Line will correlate with left axis values
-        set6.setColor(UIColor.blueColor().colorWithAlphaComponent(0.5)) // our line's opacity is 50%
-        set6.setCircleColor(UIColor.blueColor()) // our circle will be dark red
-        set6.lineWidth = 1.0
-        set6.circleRadius = 1.0 // the radius of the node circle
-        set6.fillAlpha = 65 / 255.0
-        set6.fillColor = UIColor.blueColor()
-        set6.highlightColor = UIColor.blueColor()
-        set6.drawValuesEnabled = false
+        FourierNach.axisDependency = .Left
+        FourierNach.setColor(UIColor.blueColor().colorWithAlphaComponent(0.5))
+        FourierNach.setCircleColor(UIColor.blueColor())
+        FourierNach.lineWidth = 1.0
+        FourierNach.circleRadius = 1.0
+        FourierNach.fillAlpha = 65 / 255.0
+        FourierNach.fillColor = UIColor.blueColor()
+        FourierNach.highlightColor = UIColor.blueColor()
+        FourierNach.drawValuesEnabled = false
         
         
        
@@ -140,54 +149,66 @@ class ViewController: UIViewController,ChartViewDelegate {
         
         
         
-        motionmanager.accelerometerUpdateInterval = 0.01
+        motionmanager.accelerometerUpdateInterval = 0.01  //100 Hertz Abtastrate
         
-        if state == false
+        if state == false // Falls Start noch nicht gedrückt wurde
         {
             state = true
             startButton.setTitle("Stop", forState: UIControlState.Normal)
+            self.fourier_chart.hidden = true
+            self.chart.hidden = false
             
             if motionmanager.accelerometerAvailable
             {
             
             
-            var time:Double = 0
-            var i = 0
-            var kumuliert = 0.00
-            var kumuliert2 = 0.00
-            var kumuliert_help = 0.00
-            var max_peak = 0.00
-            var last_high = 0
-            var high = false
-            var intervall = 0
+                var time:Double = 0
+                var i = 0
+                var kumuliert = 0.00
+                var kumuliert2 = 0.00
+                var kumuliert_help = 0.00
+                var max_peak = 0.00
+                var last_high = 0
+                var high = false
+                var intervall = 0
            
+                //Hinzufügen der Sets
+                
+                //linedata: unsichtbar
+                linedata.addDataSet(Werte)
+                linedata.addDataSet(MovingAverage)
+                
+                //linedata2:sichtbar
+                linedata2.addDataSet(Rechteck)
+                linedata2.addDataSet(Abweichung)
                 
                 
-                linedata.addDataSet(set1)
-                linedata.addDataSet(set2)
+                fourierTest.addDataSet(FourierNach)
+                fourierTest.addDataSet(FourierVor)
                 
                 
                 
-                linedata2.addDataSet(set4)
-                linedata2.addDataSet(set3)
                 
-                
-                fourierTest.addDataSet(set6)
-                fourierTest.addDataSet(set5)
-                
-               chart.data = linedata2
+                chart.data = linedata2
             
             
-            motionmanager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!){
+                //Start der Updates
+                motionmanager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!)
+                {
+                    
                 [weak self] (dataacc: CMAccelerometerData?, error: NSError?) in
                 
                 
-                
-                
+                //X-Wert(Zeit) hinzufügen
                 self!.linedata.addXValue(String(format:"%.1f" ,time))
-                 self!.linedata2.addXValue(String(format:"%.1f" ,time))
-                self!.linedata.addEntry(ChartDataEntry(value: 10*dataacc!.acceleration.z*10*dataacc!.acceleration.z,xIndex :i), dataSetIndex: 0)
-                if (i>20)
+                self!.linedata2.addXValue(String(format:"%.1f" ,time))
+                    
+                //Quadrierte Messwerte hinzufügen
+                self!.linedata.addEntry(ChartDataEntry(value: dataacc!.acceleration.z*10*dataacc!.acceleration.z,xIndex :i), dataSetIndex: 0)
+                    
+                
+                //Nach 30 Messwerten
+                if (i>30)
                 {
                     kumuliert = 0
                     for n in 0...29
@@ -195,10 +216,13 @@ class ViewController: UIViewController,ChartViewDelegate {
                         kumuliert = kumuliert+(self!.linedata.getDataSetByIndex(0).entryForXIndex(i-n)?.value)!
                     }
                     
-                    self!.linedata.addEntry(ChartDataEntry(value:   kumuliert/30,xIndex: i), dataSetIndex: 1)
+                    //Mittelwert der letzten 30 Eintraege
+                    self!.linedata.addEntry(ChartDataEntry(value:  kumuliert/30,xIndex: i), dataSetIndex: 1)
                     
                     kumuliert2 = 0
                     
+                    
+                    //Mittelwert des Betrages der Abweichung (des Mittwelwerts vom Messwert) der letzten 6 Einträge
                     for n in 0...5
                     {
                         kumuliert_help = abs((self!.linedata.getDataSetByIndex(0).entryForXIndex(i-n)?.value)!-(self!.linedata.getDataSetByIndex(1).entryForXIndex(i-n)?.value)! )
@@ -213,6 +237,8 @@ class ViewController: UIViewController,ChartViewDelegate {
                     
                 }
                 
+                    
+                //Alle 120 Werte wird der Maximalwert herausgesucht und als Referenz für einen Puls gesetzt
                 if (i%120 == 0 && i>0)
                 {
                     max_peak = 0
@@ -227,20 +253,24 @@ class ViewController: UIViewController,ChartViewDelegate {
                     }
                 }
                 
+                
+                // Falls ein Wert innerhalb eines Toleranzbereiches um den max_peak liegt und nicht innerhalb der letzten 0.4s ein Peak gefunden wurde --> Peak gefunden
                 if (i>=120)
                 {
                     if ((self!.linedata2.getDataSetByIndex(1).entryForXIndex(i)?.value)! >= 0.8*max_peak && (self!.linedata2.getDataSetByIndex(1).entryForXIndex(i)?.value)! <= 1.5*max_peak)
                     {
-                         self!.linedata2.addEntry(ChartDataEntry(value: 0.5,xIndex: i), dataSetIndex: 0)
+                        
                         if (high == false)
                         {
                             high = true
                             
-                            if (i-last_high > 35)
+                            if (i-last_high > 40)
                             {
                                 intervall = i - last_high
                                 
                                     self?.Puls.text = String(format: "%.2f /min ", 60/(Double(intervall)*0.01))
+                                max_peak = (self!.linedata2.getDataSetByIndex(1).entryForXIndex(i)?.value)!
+                                self!.linedata2.addEntry(ChartDataEntry(value: 0.1,xIndex: i), dataSetIndex: 0)
                                   
                             }
                             
@@ -257,6 +287,7 @@ class ViewController: UIViewController,ChartViewDelegate {
                     
                 }
                 
+                //Anzeige der Werte
                 if (i%10 == 0)
                 {
                     self!.chart.notifyDataSetChanged()
@@ -264,6 +295,7 @@ class ViewController: UIViewController,ChartViewDelegate {
                     self!.chart.moveViewToX(CGFloat(self!.linedata2.xValCount-401))
                 }
                 
+                //Begrenzung der Größe der Tabellen auf 512
                 if (i>=512 )
                 {
                     
@@ -293,46 +325,50 @@ class ViewController: UIViewController,ChartViewDelegate {
     }
         else
         {
+            //FOURIER
+            motionmanager.stopAccelerometerUpdates()
             startButton.setTitle("Start", forState: UIControlState.Normal)
             
             state = false
-            motionmanager.stopAccelerometerUpdates()
+           
             
             let size = 1024
+            let log2n:UInt = 10
             
+            //FFT-SETUP
+            let fft = vDSP_create_fftsetup(log2n, FFTRadix(FFT_RADIX2))
             
-            let fft = vDSP_create_fftsetup(10, FFTRadix(FFT_RADIX2))
+            var originalReal = [Float]() //1. Speicherort unserer Messwerte
             
-            var originalReal = [Float]()
-            
-            var real = floats((size/2) * sizeof(Float))
+            var real = floats((size/2) * sizeof(Float)) //2 Float Arrays zum Speichern von Real und Imag
             var imaginary = floats((size/2) * sizeof(Float))
-            var splitComplex = DSPSplitComplex(realp: &real, imagp: &imaginary)
+            var splitComplex = DSPSplitComplex(realp: &real, imagp: &imaginary) // DSP-Typ zum Speichern von komplexen Zahlen
             
-            print("--------------------------------------------")
-            
+           
+            //Abwechselnd einen Messwert (Realteil) und 0(Imaginärteil) speichern
             for i in 0...(size/2-1)
             {
-                //print((self.linedata2.getDataSetByIndex(1).entryForXIndex(self.linedata2.xValCount-511+i)?.value)!)
+                
                 originalReal.append(Float((self.linedata2.getDataSetByIndex(1).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!))
                 originalReal.append(Float(0))
             }
-            vDSP_ctoz(UnsafePointer<COMPLEX>(originalReal), 2, &splitComplex, 1,UInt(size/2))
             
-//              print("----------------------------------------------")
-//            for i in 0...(size/2-1)
-//            {
-//                print(String(format: "%.1f + %.1f i",splitComplex.realp.advancedBy(i).memory,(splitComplex.imagp.advancedBy(i).memory)))
-//            }
-            vDSP_fft_zrip(fft, &splitComplex, 1, 10, FFTDirection(FFT_FORWARD))
+            
+            vDSP_ctoz(UnsafePointer<COMPLEX>(originalReal), 2, &splitComplex, 1,UInt(size/2)) //Umwandeln des Float Arrays in eine komplexe Zahl (originalReal -> splitComplex)
+            
+
+            vDSP_fft_zrip(fft, &splitComplex, 1, log2n, FFTDirection(FFT_FORWARD))  //Fourier-Transformation von splitComplex
             
             print("-------------------------------------------------")
+            
+            
+            //Ausgabe der transformierten Werte
             for i in 0...(size/2-1)
             {
                 print(String(format: "%.1f + %.1f i",splitComplex.realp.advancedBy(i).memory,(splitComplex.imagp.advancedBy(i).memory)))
             }
            
-            print("---------------------------------------------------")
+            //Gleichanteil = 0
             splitComplex.realp.advancedBy(0).memory = 0
             splitComplex.imagp.advancedBy(0).memory = 0
             
@@ -343,7 +379,16 @@ class ViewController: UIViewController,ChartViewDelegate {
                 splitComplex.imagp.advancedBy(i).memory = 0
             }
             
-            vDSP_fft_zrip(fft, &splitComplex, 1, 10, FFTDirection(FFT_INVERSE))
+            print("-------------------------------------------------")
+            
+
+            
+            for i in 0...511
+            {
+                  print(String(format: "%d . %.2f + %.1f i",i,splitComplex.realp.advancedBy(i).memory,(splitComplex.imagp.advancedBy(i).memory)))
+            }
+         
+            vDSP_fft_zrip(fft, &splitComplex, 1, log2n, FFTDirection(FFT_INVERSE))
             var scale = Float( 1.0 / (2 * 1024));
             
             vDSP_vsmul(splitComplex.realp, 1, &scale,splitComplex.realp, 1, UInt(size/2));
@@ -359,15 +404,15 @@ class ViewController: UIViewController,ChartViewDelegate {
             
             for i in 0...(size/2-1)
             {
-               self.fourierTest.addEntry(ChartDataEntry(value: self.linedata2.getDataSetByIndex(1).entryForIndex(i)!.value,xIndex:i), dataSetIndex: 0)
+               self.fourierTest.addEntry(ChartDataEntry(value: self.linedata2.getDataSetByIndex(1).entryForIndex(i)!.value,xIndex:i), dataSetIndex: 1)
                 
-                self.fourierTest.addEntry(ChartDataEntry(value: Double(splitComplex.realp.advancedBy(i).memory) ,xIndex: i), dataSetIndex: 1)
+                self.fourierTest.addEntry(ChartDataEntry(value: Double(splitComplex.realp.advancedBy(i).memory) ,xIndex: i), dataSetIndex: 0)
                 
                 self.fourierTest.addXValue(String(format: "%.1f", Double(self.linedata2.xValCount-511+i)*0.01 ))
                 
                 print(String(format: "%d . %.2f + %.1f i",i,splitComplex.realp.advancedBy(i).memory,(splitComplex.imagp.advancedBy(i).memory)))
-                print(self.fourierTest.xValCount)
-                print(self.linedata2.xValCount-510+i)
+             
+              
                
             }
          
