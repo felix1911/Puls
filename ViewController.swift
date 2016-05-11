@@ -382,11 +382,11 @@ class ViewController: UIViewController,ChartViewDelegate {
             
             
             
-            for i in 20...511
-            {
-                splitComplex.realp[i] = 0
-                splitComplex.imagp[i] = 0
-            }
+//            for i in 20...511
+//            {
+//                splitComplex.realp[i] = 0
+//                splitComplex.imagp[i] = 0
+//            }
       
             
             print("-------------------------------------------------")
@@ -421,8 +421,9 @@ class ViewController: UIViewController,ChartViewDelegate {
             for i in 0...(size/2-1)
             {
                self.fourierTest.addEntry(ChartDataEntry(value: self.linedata2.getDataSetByIndex(1).entryForIndex(i)!.value,xIndex:i), dataSetIndex: 1)
+              
                 
-                self.fourierTest.addEntry(ChartDataEntry(value: Double(splitComplex.realp[i]) ,xIndex: i), dataSetIndex: 0)
+                self.fourierTest.addEntry(ChartDataEntry(value: Double(magnitude[i/2]) ,xIndex: i), dataSetIndex: 0) //ersetze               splitComplex.realp[i] durch magnitude[i] für Frequenzspektrum      splitComplex.realp[i]
                 
                 self.fourierTest.addXValue(String(format: "%.1f", Double(self.linedata2.xValCount-511+i)*0.01 ))
                 
