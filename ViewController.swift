@@ -354,6 +354,7 @@ class ViewController: UIViewController,ChartViewDelegate {
             {
                 
                 originalReal.append(Float((self.linedata2.getDataSetByIndex(1).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!))
+                print((self.linedata.getDataSetByIndex(0).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!)
                 originalReal.append(Float(0))
             }
             
@@ -369,7 +370,7 @@ class ViewController: UIViewController,ChartViewDelegate {
             //Ausgabe der transformierten Werte
             for i in 0...(sizeHalf-1)
             {
-                print(String(format: "%d %.1f + %.1f i",i,splitComplex.realp[i],splitComplex.imagp[i]))
+                //print(String(format: "%d %.1f + %.1f i",i,splitComplex.realp[i],splitComplex.imagp[i]))
             }
            
             //Gleichanteil = 0
@@ -395,7 +396,7 @@ class ViewController: UIViewController,ChartViewDelegate {
             
             for i in 0...(sizeHalf-1)
             {
-                  print(String(format: "%d . %.2f + %.1f i",i,splitComplex.realp[i],(splitComplex.imagp[i])))
+                  //print(String(format: "%d . %.2f + %.1f i",i,splitComplex.realp[i],(splitComplex.imagp[i])))
             }
          var scale = Float( 1.0 / (2 * 1024));
              vDSP_zvmags(&splitComplex, 1, &magnitude, 1, UInt(sizeHalf))
@@ -427,8 +428,8 @@ class ViewController: UIViewController,ChartViewDelegate {
                 
                 self.fourierTest.addXValue(String(format: "%.1f", Double(self.linedata2.xValCount-511+i)*0.01 ))
                 
-                print(String(format: "%d . %.5f + %.1f i",i,splitComplex.realp[i],(splitComplex.imagp[i])))
-                print(String(format: "%.8f",magnitude[i]))
+                //print(String(format: "%d . %.5f + %.1f i",i,splitComplex.realp[i],(splitComplex.imagp[i])))
+                //print(String(format: "%.8f",magnitude[i]))
               
                
             }
