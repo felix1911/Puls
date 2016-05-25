@@ -350,12 +350,16 @@ class ViewController: UIViewController,ChartViewDelegate {
             
            
             //Abwechselnd einen Messwert (Realteil) und 0(Imaginärteil) speichern
-            for i in 0...(size/2-1)
+//            for i in 0...(size/2-1)
+//            {
+//                
+//                originalReal.append(Float((self.linedata2.getDataSetByIndex(1).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!))
+//                print((self.linedata.getDataSetByIndex(0).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!)
+//                originalReal.append(Float(0))
+//            }
+            for i in 0...139
             {
-                
-                originalReal.append(Float((self.linedata2.getDataSetByIndex(1).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!))
-                print((self.linedata.getDataSetByIndex(0).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!)
-                originalReal.append(Float(0))
+                print((self.linedata.getDataSetByIndex(0).entryForXIndex(self.linedata2.xValCount-140+i)?.value)!)
             }
             
             
