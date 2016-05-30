@@ -189,7 +189,7 @@ class ViewController: UIViewController,ChartViewDelegate {
                 
                 
                 
-                chart.data = linedata2
+                chart.data = linedata
             
             
                 //Start der Updates
@@ -204,7 +204,7 @@ class ViewController: UIViewController,ChartViewDelegate {
                 self!.linedata2.addXValue(String(format:"%.1f" ,time))
                     
                 //Quadrierte Messwerte hinzufügen
-                self!.linedata.addEntry(ChartDataEntry(value: dataacc!.acceleration.z*10*dataacc!.acceleration.z,xIndex :i), dataSetIndex: 0)
+                self!.linedata.addEntry(ChartDataEntry(value: sqrt(dataacc!.acceleration.z*dataacc!.acceleration.z),xIndex :i), dataSetIndex: 0)
                     
                 
                 //Nach 30 Messwerten
@@ -303,8 +303,8 @@ class ViewController: UIViewController,ChartViewDelegate {
                     self!.linedata2.removeEntryByXIndex(i-512, dataSetIndex: 0)
                     self!.linedata.removeEntryByXIndex(i-512, dataSetIndex: 1)
                     self!.linedata.removeEntryByXIndex(i-512, dataSetIndex: 0)
-                    self!.chart.leftAxis.axisMinValue = self!.linedata2.yMin - 0.25
-                    self!.chart.leftAxis.axisMaxValue = self!.linedata2.yMax + 0.25
+                    self!.chart.leftAxis.axisMinValue = self!.linedata.yMin - 0.01
+                    self!.chart.leftAxis.axisMaxValue = self!.linedata.yMax + 0.01
                     self!.chart.leftAxis.labelCount = Int(self!.chart.leftAxis.axisMaxValue - self!.chart.leftAxis.axisMinValue)
                     self!.chart.leftAxis.startAtZeroEnabled = false
                    
@@ -357,9 +357,9 @@ class ViewController: UIViewController,ChartViewDelegate {
 //                print((self.linedata.getDataSetByIndex(0).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!)
 //                originalReal.append(Float(0))
 //            }
-            for i in 0...139
+            for i in 0...279
             {
-                print((self.linedata.getDataSetByIndex(0).entryForXIndex(self.linedata2.xValCount-140+i)?.value)!)
+                print((self.linedata.getDataSetByIndex(0).entryForXIndex(self.linedata2.xValCount-512+i)?.value)!)
             }
             
             
