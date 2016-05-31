@@ -10,7 +10,7 @@ persistent Hd;
 if isempty(Hd)
     
     N     = 20;    % Order
-    Fstop = 1;  % Stopband Frequency
+    Fstop = 0.7;  % Stopband Frequency
     Astop = 80;    % Stopband Attenuation (dB)
     Apass = 1;     % Passband Ripple (dB)
     Fs    = 100;   % Sampling Frequency
