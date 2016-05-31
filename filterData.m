@@ -5,10 +5,13 @@ plot(data)      %Rohdaten ausgeben
 
 data_high = high(data);     %Hochpass auf Rohdaten anwenden.....z.B. Atmung "rausschmeissen" 
 
+data_high_abs = abs(data_high);         %Betragsfunktion 
+data_abs_low = low(data_high_abs);      %Tiefpass auf Daten anweden
 
-data_high_n = (data_high-mean(data_high))/std(data_high);       %Hochpassgefilterte Daten normieren f¸r Autokorr.
 
-data_xcorr = xcorr(data_high_n,'coeff');    %Autokorr. auf normierte, hochpassgefilterte Rohdaten anwenden
+data_low_n = (data_abs_low-mean(data_abs_low))/std(data_abs_low);       % Daten normieren f√ºr Autokorr.
+
+data_xcorr = xcorr(data_low_n,'coeff');    %Autokorr. auf normierte, gefilterte Rohdaten anwenden
 figure(3);
 clf;
 plot(data_xcorr)
@@ -46,7 +49,7 @@ plot(x+15,y,'o','MarkerSize',10);
 
 
 frequenz = 60/(x+15);
-disp(['Der Puls betr‰gt ', num2str(frequenz * 100), ' Schl‰ge pro Minute']);
+disp(['Der Puls betr√§gt ', num2str(frequenz * 100), ' Schl√§ge pro Minute']);
 
 y=frequenz;
 
