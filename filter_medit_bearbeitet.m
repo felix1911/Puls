@@ -1,12 +1,22 @@
 
-
 medit = VarName1;
+
+data_split = ones(5,300);
+n = 1;
+
+while n<=5
+    data_split(n,:)=medit(((n-1)*300)+1:n*300,:);  
+    
+    n = n+1;
+end
+
+
 fs = 100;
 [b, a] = butter(4,[0.7] /(fs/2),'high');
 
 [d, c] = butter(2,[3]/(fs/2));
 figure;
-data_filt_1 = filtfilt(b,a,medit);
+data_filt_1 = filtfilt(b,a,data_split(1,:));
 data_filt_1_sqr = data_filt_1.^2;
 
 data_filt_2 = filtfilt(d,c,data_filt_1_sqr);
@@ -21,19 +31,19 @@ close all;
 
 
 
-n = 1;
-data = ones(5,300);
-data_xcorr_all = ones(5,599);
 
-while n<=5
-            data(n,:)=data_filt_2(((n-1)*300)+1:n*300,:);
+data = ones(300);
+data_xcorr_all = ones(599);
+
+
+            data = data_filt_2;
            
-            data_high_n = (data(n,:)-mean(data(n,:)))/std(data(n,:));
-            data_xcorr_all(n,:) = xcorr(data_high_n,'coeff'); 
+            data_high_n = (data-mean(data))/std(data);
+            data_xcorr_all = xcorr(data_high_n,'coeff'); 
   
             
          
-            data_xcorr = data_xcorr_all(n,:);
+            data_xcorr = data_xcorr_all;
             max_index = size(data,2);
             
             data_relevant = data_xcorr(max_index+33:max_index+150);%Nur Daten ab +33, da bei x=0 das Max. liegt(Signal identisch mit sich selbst)
@@ -64,5 +74,3 @@ while n<=5
             
             
             n = n+1;
-            
-end
