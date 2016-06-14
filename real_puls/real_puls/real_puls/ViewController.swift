@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         let size_zi = zi.count
         var nfilt = max(size_numerator, size_denominator)
         var nfact = max(1, 3*(nfilt-1))
-        var modified_eingabe = [Double]()
+        var modified_eingabe = [Double](count:12, repeatedValue: 0.0 )
         let eingabe_anfang = eingabe[0]
         let eingabe_ende = eingabe[eingabe.count - 1]
         
@@ -42,10 +42,11 @@ class ViewController: UIViewController {
         
         var counter = nfact + 1
        
-        //padding an beiden Seiten
+        //////////////////////////////////////////padding an beiden Seiten
+        
         while counter >= 2
         {
-            modified_eingabe.append(2*eingabe_anfang - eingabe[counter-1])
+            modified_eingabe[nfact+1-counter] = (2*eingabe_anfang - eingabe[counter-1])
            
             counter = counter - 1
         }
@@ -57,85 +58,90 @@ class ViewController: UIViewController {
             modified_eingabe.append(2*eingabe_ende - eingabe[counter])
             counter = counter - 1
         }
-       
-        var i = 0
         
-        while i<324
+        /////////////////////////////////////////
+        print("Modified_eingabe")
+        var i = 0
+        while i<323
         {
-            print(modified_eingabe[i])
+            print(modified_eingabe[i],",")
             i = i+1
         }
-        //////////////////////////////////////////
-        var n = 0
+        print("Modified_eingabe ende!")
+        ////////////////////////////////////////// Filtern vorwärts
         
-        while n<(300 + 2 * nfact-1)
+        var dbuffer = [Double](count:5, repeatedValue: 0.0 )
+        
+        for k in 0...3
         {
-            var i = 0
-            
-            while i < size_numerator
-            {
-                if(n - i >= 0 )
-                {
-                    output_1[n] = output_1[n] + numerator[i] * modified_eingabe[n-i]
-                }
-                i = i + 1
-            }
-            
-            i = 0
-            while i < size_denominator
-            {
-                if (n-i) >= 0
-                {
-                     output_1[n] = output_1[n] - denominator[i] * output_1[n-i]
-                }
-                else
-                {
-                    output_1[n] = output_1[n] - zi[-1*(n-i)] * modified_eingabe[0]
-                }
-                i = i+1
-            }
-        n = n+1
+            dbuffer[k + 1] = zi[k];
         }
-    
-     output_2 = output_1.reverse()
         
-         n = 0
-        
-        while n<(300 + 2*nfact)
+        for j in 0...323
         {
-            var i = 0
-            
-            while i < size_numerator
+            for k in 0...3
             {
-                if(n - i >= 0 )
-                {
-                    output_3[n] = output_3[n] + numerator[i] * output_2[n-i]
-                }
-                i = i + 1
+                dbuffer[k] = dbuffer[k + 1];
             }
             
-            i = 0
-            while i < size_denominator
+            dbuffer[4] = 0.0;
+            for k in 0...4
             {
-                if (n-i) >= 0
-                {
-                    output_3[n] = output_3[n] - denominator[i] * output_2[n-i]
-                }
-                else
-                {
-                    output_3[n] = output_3[n] - zi[-1*(n-i)] * output_2[0]
-                }
-                i = i+1
+                dbuffer[k] += modified_eingabe[j] * numerator[k];
             }
-            n = n+1
+            for k in 0...3
+            {
+                dbuffer[k + 1] -= dbuffer[0] * denominator[k + 1];
+            }
+            output_1[j] = dbuffer[0];
+        }
+        //////////////////////////////////////////Ausgabe output_1
+        
+        i = 0
+        while i<324
+        {
+            print(output_1[i])
+            i = i+1
+        }
+        ////////////////////////////////////////// Filtern rückwärts
+       output_2 = output_1.reverse()
+
+        for k in 0...3
+        {
+            dbuffer[k + 1] = zi[k];
+        }
+        
+        for j in 0...323
+        {
+            for k in 0...3
+            {
+                dbuffer[k] = dbuffer[k + 1];
+            }
+            
+            dbuffer[4] = 0.0;
+            for k in 0...4
+            {
+                dbuffer[k] += output_2[j] * numerator[k];
+            }
+            for k in 0...3
+            {
+                dbuffer[k + 1] -= dbuffer[0] * denominator[k + 1];
+            }
+            output_3[j] = dbuffer[0];
         }
         
     output_4 = output_3.reverse()
     output_4.removeRange(0...(nfact-1))
     output_4.removeRange((output_4.count-1-nfact)...(output_4.count-1-nfact))
         
-       
-        
+        print("-------------------------------------")
+        i = 0
+        while i<299
+        {
+            print(output_4[i])
+            i = i+1
+        }
+        print("-------------------------------------")
     return output_4
         
     }
@@ -194,7 +200,7 @@ class ViewController: UIViewController {
                         counter_filter = 0
                         let zi_high = [-0.9441,2.8324,-2.8324,0.9441]
                         let num_high = [0.9441,-3.7766,5.6649,-3.7766,0.9441]
-                        let denom_high = [-3.8851, 5.6618, 3.6681, 0.8914]
+                        let denom_high = [1,-3.8851, 5.6618, 3.6681, 0.8914]
                         var out = self!.filter(self!.Messwerte, numerator: num_high, denominator: denom_high, zi: zi_high)
                         
                         
