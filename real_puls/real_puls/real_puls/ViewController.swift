@@ -602,6 +602,13 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
                         //FILTERn
                         
                         counter_filter = 0
+<<<<<<< HEAD
+=======
+                        let zi_high = [-0.9441,2.8324,-2.8324,0.9441]
+                        let num_high = [0.9441,-3.7766,5.6649,-3.7766,0.9441]
+                        let denom_high = [1,-3.8851, 5.6618, -3.6681, 0.8914]
+                        var out = self!.filter(self!.Messwerte, numerator: num_high, denominator: denom_high, zi: zi_high)
+>>>>>>> fd7fb7afe75dd104f3c8d75d5f69cbe02fc12055
                         
                         first = true
                         
